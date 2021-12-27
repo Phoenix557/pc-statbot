@@ -1,0 +1,25 @@
+{
+  "name": "pc-statbot",
+  "version": "1.0.0",
+  "description": "Get & track the stats of you machine all in a Discord bot!",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Phoenix557/pc-statbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Phoenix557/pc-statbot/issues"
+  },
+  "homepage": "https://github.com/Phoenix557/pc-statbot#readme",
+  "dependencies": {
+    "discord.js": "^13.4.0",
+    "hyperz-nodelogger": "^3.7.2",
+    "nodemon": "^2.0.15"
+  }
+}
