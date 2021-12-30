@@ -44,7 +44,7 @@
     <p>Copy the token and paste it in the <code>token</code> part of the config</p>
 <br>
     <img src="https://cdn.discordapp.com/attachments/855634041424183346/926219018283655198/unknown.png">
-    <p>Copy the client ID and past it in the <code>clientID</code> part of the config</p>
+    <p>Copy the client ID and paste it in the <code>clientID</code> part of the config</p>
     <p>Obviously don't use the clientID above. </p> 
 </br>
 </div>
