@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/Phoenix557/pc-statbot.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["statbot", "pc", "specs", "discord", "discord.js"],
+  "author": "Phoenix557",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Phoenix557/pc-statbot/issues"
@@ -19,7 +19,8 @@
   "homepage": "https://github.com/Phoenix557/pc-statbot#readme",
   "dependencies": {
     "discord.js": "^13.4.0",
-    "hyperz-nodelogger": "^3.7.2",
-    "nodemon": "^2.0.15"
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.15",
+    "systeminformation": "^5.9.17"
   }
 }

@@ -1,0 +1,12 @@
+{
+  "data": {
+    "token": "",
+    "clientID": "",
+    "interval": 1
+  },
+  "components": {
+    "battery": true,
+    "cpuUsage": true,
+    "memoryUsage": true
+  }
+}
