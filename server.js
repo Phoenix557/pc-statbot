@@ -6,7 +6,7 @@ const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 const { ready, eventStart } = require('./utils/ready.js');
-const { sptc } = require('./utils/sptc.js');
+const { sptc, sptce } = require('./utils/sptc.js');
 const channels = require('./data/channel.json');
 
 // client ready => console.log() banner 
@@ -22,10 +22,12 @@ client.on('ready', async () => {
 		console.log(`Updating every ${config.data.interval}s...`);
 		// if theres messages in a channel then update
 		update();
+		sptc();
 		// no messages in a channel that needs to be updated then log that its awaitng s.start
 	} else {
 		// event function (tells user that is waiting for s.start)
         eventStart();
+		sptce();
 	}
 
 });
