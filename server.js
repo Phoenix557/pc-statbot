@@ -7,21 +7,22 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 const { ready, eventStart } = require('./utils/ready.js');
 const { sptc } = require('./utils/sptc.js');
-// const { update } = require('./utils/update.js');
 const channels = require('./data/channel.json');
 
 // client ready => console.log() banner 
 client.on('ready', async () => {
     // banner function
     ready();
-
-	client.user.setPresence({ activity: { name: 'made with ❤️ by Phoenix557 | s.help' }, status: 'dnd' });
-
+	// set the users statis
+	client.user.setPresence({ activities: [{ name: 's.help' }], status: 'dnd' });
+	// check if there is channels already set to be updated
     if (channels.messageID && channels.channelID) {
 		let channel = await client.channels.fetch(channels.channelID);
 		MESSAGE = await channel.messages.fetch(channels.messageID);
 		console.log(`Updating every ${config.data.interval}s...`);
+		// if theres messages in a channel then update
 		update();
+		// no messages in a channel that needs to be updated then log that its awaitng s.start
 	} else {
 		// event function (tells user that is waiting for s.start)
         eventStart();
@@ -47,45 +48,70 @@ component_names.forEach(file_name => {
 		components.set(component_name, file);
 });
 
+// function for updating the messages in the channels (stats)
 async function update() {
 	if (!MESSAGE) return console.log('Unable to fetch channel or message.');
 
+	// payload is the stats
 	let payload = '';
 
+	// promises in an array 
 	const promises = [];
+
+	// for each component update said compoent stat
 	components.forEach(component => promises.push(component.update()));
 
+	// valuues of the payloads
 	const values = await Promise.all(promises);
+	// join the values together and seperate them
 	payload = values.join('\n');
 
-	// ${moment().format("hh:mm:ss A DD-MM-YYYY").fromNow()}
+	// last updated message (this is for the machine) // still a work in progress
 	payload += `\n:timer: **Last Updated:** ${moment().format('MMM Do YY')}`;
+	// edit the payload (the timer)
 	MESSAGE.edit(payload);
+	// update every `x` amount of seconds declared in the config file
 	setTimeout(update, config.data.interval * 1000);
 }
 
-
+// take the commands
 client.on('messageCreate', async (message) => {
-	if (message.author.bot) return;
-	if (message.content === 's.start') {
+	// checks if the user is a bot 
+	if (message.author.bot) return; // if true, it'll ignore the message
+	
+	// check the message content
+	if (message.content === 's.start') { // if theres already a message set return 
 		if (channels.messageID) return message.reply("stats has already started.");
 
+		// allow the user to know that its checking to see if the stats are already started
+		// more checks
 		let msg = await message.channel.send("Updatig stats...");
 		channels.messageID = msg.id;
 		channels.channelID = msg.channel.id;
 		MESSAGE = msg;
+		// write the messageID and channelID to this file
 		fs.writeFileSync('./data/channel.json', JSON.stringify(channels, null, 2));
+		//update
 		update();
 	}
+	// check the message content
 	if (message.content === 's.ping') {
+		// send message "ping?"
 		const msg = await message.channel.send('Ping?')
+		// edit the message & provide the ping
 		msg.edit(`Pong! Latency is ${Math.round(msg.createdTimestamp - message.createdTimestamp)} ms. API Latency is ${Math.round(client.ws.ping)} ms`)
 	}
+	// check message content
 	if (message.content === 's.help') {
+		// this is a discord emebed for the help command
 		const help = {
-			description: "📕 | Welcome to Computer Infomation!\n\n`s.ping`: Shows the current ping for Computer Infomation.\n`s.start`: Starts the computer information for Phoenix#8033's computer.\n`s.help`: Shows this message."
+			description: "📕 | Welcome to PC-Statbot!\n\n`s.ping`: Shows the current ping for Computer Infomation.\n`s.start`: Starts the computers statistics\n`s.help`: Shows this message.",
+			footer: {
+				text: 'Made with ❤️ by Phoenix557',
+			},
 		}
-		return message.channel.send({embed: help});
+		// retrun with the embed
+		return message.reply({embeds: [help]});
 	}
 });
 
