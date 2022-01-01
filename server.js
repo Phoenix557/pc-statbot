@@ -127,7 +127,7 @@ try {
     console.log(`Error logging in: ${err}`);
 } sptc();
 client.on("error", (err) => { // On error, log any errors and restart
-	console.log('Dicord Client Error:', err);
+	console.log(`Discord Client Error: ${err}`);
 	client.login(config.data.token);
 })
  // more error logging
